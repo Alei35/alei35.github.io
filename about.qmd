@@ -1,0 +1,14 @@
+---
+image: https://media.licdn.com/dms/image/v2/D4E03AQFt3fzURSpQWA/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1725647492013?e=1740614400&v=beta&t=k8bUZYwE69fLRktaPZ84eUGAKuYZ2ccS9UTTlN3Xtns
+about:
+  template: trestles
+  links:
+    - icon: linkedin
+      text: LinkedIn
+      href: https://uk.linkedin.com/in/adrian-lei-4b214a161
+    - icon: github
+      text: Github
+      href: https://github.com/Alei35
+
+---
+I am a curious data scientist constantly learning and experimenting with different techniques and topics. This is a place for all that I've found interesting, hopefully you'll find the same!
