@@ -11,4 +11,6 @@ about:
       href: https://github.com/Alei35
 
 ---
-I am a curious data scientist constantly learning and experimenting with different techniques and topics. This is a place for all that I've found interesting, hopefully you'll find the same!
+I am a curious data scientist constantly learning and experimenting with different techniques and topics. 
+
+This is a place for all that I've found interesting, hopefully you'll find the same!

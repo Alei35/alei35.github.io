@@ -1,0 +1,101 @@
+---
+title: "MnK vs Controller: Impact of Player Input on Apex Legends 1v1s"
+date: "2024-12-25"
+categories: [video games]
+draft: true
+---
+
+![](roller_and_mnk.jpg)
+
+In my free time, I play video games, mostly of the RPG variety: Cyberpunk 2077, God of War, Baldur's Gate III. Though one competitive one has captured me for the past few years: Apex Legends.
+
+Apex Legends is a first-person shooter battle royale with hero shooter elements much like Overwatch (you shoot guns at other characters until your team is the only one left). The raw gameplay is an absolute gem and it's also been a great excuse to keep up with some of my closest friends. In recent seasons, we've played a lot more of the ranked game mode, achieving Masters rank (~top 0.5% of players) in the current season.
+
+Over these seasons, we've noticed a trend in the players we're facing - more and more of them seem to be using controller instead of mouse and keyboard, the native input for PC gaming. Why might that be?
+
+#### Primer on Inputs
+The main difference between the 2 inputs is how they map physical space onto in game space. Essentially, a mouse detects movement through taking a large series of low resolution images and comparing them against each other. This measurement is further magnified through software defined sensitivity to achieve the movement in game. 
+
+In this way, given a surface that lends itself well to image comparison and a high rate of images taken per second, one can map a movement in game from point a to b to a movement in the __physical__ world from point x to y. Given enough training, a player could theoretically learn these mappings and precisely move their mouse to the  physical location that maps onto the intended movement in game - there is a 1:1 mapping between physical and in game spaces.
+
+The same is not true for controllers. Each analog stick has in it potentiometers that measure the current running through the circuit. As the analog stick is moved, the resistance of the circuit is changed and therefore so does the current running through the potentiometers. These changes can be used to measure the exact location of the stick within its range of motion. And therein lies the problem: *__within its range of motion__* - unlike the mouse there is a limit to the physical space that the controller can take measurements over. When the controller is fully pushed to one side, that is the maximum signal that the device can send to control the signal. 
+
+Due to this imprecise mapping, it is more difficult for the controller player to achieve accuracy in game. Therefore games often apply a layer of software called aim assist.
+
+![](aim_assist_diagram.webp)
+
+
+In the diagram above, the small red circle represents the enemy player, the larger red circle is an area of interest around the enemy player called the `aim bubble`. 
+
+Aim assist usually works in two ways:
+
+1. Reticle slowing
+2. Rotational aim assist 
+
+As the reticle moves into the aim bubble, aim assist will lower the in game sensitvity multiplier, 'slowing' the players aim and increasing the chance of the reticle landing on the enemy player. This is known as reticle slowing.
+
+Rotational aim assist in contrast moves the reticle in the direction of the enemy player's movement when they enter the aim bubble as long as their is some degree of aiming or movement input from the player. In effect 'dragging' the reticle towards the enemy.
+
+The strength of these effects are determined on a game to game basis, with some games emphasising one over the other. Within the context of first person shooters, aim assist is often discussed as 'unfair', this is mainly due to 2 perceived advantages:
+
+1. Rotational aim assist adds input that doesn't originate from the player
+2. Both aim assist effects react *__instantaneously__* to information.
+
+To expand on the second point, when an enemy player changes their movement direction from left to right, rotational aim assist will immediately start pulling the reticle to the right, this is part of why aim assist makes aiming feel 'sticky'. This is in contrast to mouse aiming where the reaction time of the player limits the speed at which the aim can adjust.
+
+#### The Hypothesis
+Due to the over-tuned strength of aim assist, controller players have an advantage when compared to mouse and keyboard players. 
+This presents itself in two ways:
+1. For an individual encounter, defined to be a 1 versus 1 fight, the average controller player has a higher chance of winning compared to the average mnk player
+2. The learning curve (how quickly one can improve at encounters) is much steeper for controller players than it is for mnk players
+In other words, the controller player not only gets to a better place, they get there __*faster*__.
+
+#### Dataset
+Due to there being no public API for Apex Legends, I've had to look for alternative data sources for this analysis. Forunately, there is a third party service `r5r` that hosts 1 versus 1 fights in servers located around the globe. The data for these matches is publically hosted at [r5r.dev](https://r5r.dev/) and this tends to be where data concerning Apex Legends comes from.
+
+#### Previous Research
+Shoutout to some of the stats-inclined folks over at [r/apexlegends](https://www.reddit.com/r/apexlegends) and [r/CompetitiveApex](https://www.reddit.com/r/CompetitiveApex/) subreddits who have done some investigation into the topic.
+
+Specfically reddit user ![lifeisbadclothing](https://www.reddit.com/user/lifeisbadclothing/) has conducted research collating the performance of the top 10,000 players in r5r. Seen here below:
+
+![](previous_r5r_research.jpg) 
+
+Big headline takeaways:
+- controller player average accuracy is 30.5% higher than mnk players
+- controller players' average KD (kill-death ratio, since encounters are 1v1, this can be seen as ratio of wins to losses) is 31.5% higher than mnk players
+- the accuracy of the top quartile of controller players is higher than the 99.93 percentile of mnk players
+
+These numbers provide strong evidence for hypothesis 1; the average controller player does indeed seem to have a higher chance of winning an encounter when compared to the mnk player.
+
+#### Approach
+The analysis I want to bring will consist of two parts:
+1. confirm the findings found by `lifeisbadclothing`
+2. expand upon the analysis through creating 'experience curves'
+
+The data I've gathered here spans x,y and includes:
+- 79,940 matches (a match here is a series of 1v1s between players in a single server)
+- 60,861 unique players
+- 47,362,344 individual fights (1v1s)
+- 189,496,133 fight events.
+
+In order to confirm the findings of `lifeisbadclothing`, we compare the distribution of mean player accuracies for the controller and mnk populations.
+
+![](controller_v_mnk_mean_accuracy.png)
+
+The data here has been filtered down to exclude the bottom 20% of players in terms of playing time (roughly speaking they played less than 10 minutes of r5r). 
+
+Two things stand out when comparing controller vs mnk players:
+- the mean of mean accuracies for controller players seem to be higher 
+- the standard deviation of mean accuracies for controller players seem to be tighter 
+
+Not only are controller players more accurate on average, they are also more consistent. I find the second element to be particulary interesting.
+
+In battle royales such as Apex Legends, the game boils down to winning a series of team fights. There are many pseudo-random factors that can influence the outcome of the fight: the equipment both teams have, the location and terrain each team can/can't take advantage of, whether the fight is isolated or not, etc. 
+
+In order to increase the chance of success, it is vital to control as many factors as possible. Understanding of the game can be broken down to `macro` and `micro` elements, with macro referring to the the wider context of the game e.g. where to land, spawn patterns, rotation paths, and micro referring to the context of fights within the gamee e.g. where to play within the terrain, when to push a team, how to play cover. 
+
+A key step in winning a team fight in Apex is generating a knock - that is defeating 1 member of the opposing team. This often opens up the opportunity for the rest of the team to collapse onto the enemies, in turn generating a numbers advantage and finishing the fight. The ease with which a team can do this is strongly influenced by the individual gun skill of the team members. Accuracy is then an important element of gun skill, the higher the accuracy the more damage one can output. Most concerns regarding aim assist address this point - that higher accuracy translates to greater ease in getting a knock, and therefore a higher chance in winning the fight.
+
+Suppose now we look at each team fight as a gamble, a game of Apex then becomes a series of gambles, where having better aim tilts the odds of the gamble in your favour. Which series of gambles would you rather take:
+1. 5 gambles where you have a 
+2. 
