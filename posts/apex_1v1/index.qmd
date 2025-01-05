@@ -1,6 +1,6 @@
 ---
 title: "MnK vs Controller: Impact of Player Input on Apex Legends 1v1s"
-date: "2024-12-25"
+date: "2025-01-05"
 categories: [video games]
 ---
 
